@@ -223,9 +223,8 @@ Given an integer <em>k</em> and a duration <em>d</em> (in seconds), find the <em
 <h3>Evaluation</h3>
 <p>The evaluation of the Grand Challenge will be done using VirtualBox virtual machines. An automated evaluation platform will be used for this year's challenge. The evaluation platform will be made available on the 15th of January. Registered participants will be able to run their code at the evaluation platform and receive the performance results multiple times (detailed instructions about the submission process will be shared  with participants starting from the 15th of January once they register to the challenge via easychair). The evaluation platform will be closed on the 3rd of April (challenge deadline).</p>
 <p>For both queries it is assumed that the result is calculated in a streaming fashion - i.e.: (1) solutions must not make use of any pre-calculated information, such as indices and (2) result streams must be updated continuously.</p>
-<p>The virtual machine should be setup with 4 cores and 8GB of RAM.</p>
+<p>The virtual machine should be setup with 4 cores and 8 GB of RAM.</p>
 <p>The ranking of the submissions will be done using the total duration of the execution and the average delay per stream. Specifically, we will rank the solutions (a) by the total execution time as well as (b) by the average latency (combining the average results from both streams in a sum). The average latency should be computed as the average of each output tuple latency, the latter measured as the difference between the system clock taken when logging an output tuple and the system clock taken when the processing of the input tuple triggering the result starts. The final ranking will be determined by a score that is the sum of the rank for execution time and the rank for delay. For solutions with the same overall score we will favor the solution with the lower execution time.</p>
-<p> </p>
 <h3>FAQ</h3>
 <p>The FAQ will appear here very shortly.</p>
 <p> </p>
