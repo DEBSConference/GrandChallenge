@@ -188,7 +188,7 @@ Given an integer <em>k</em> and a duration <em>d</em> (in seconds), find the <em
 <p>The field <em>ts</em> corresponds to the timestamp of the input data item that triggered an output update. For instance, a new friendship relation may change the size of a community with a shared interest and hence may change the <em>k</em> strings. The timestamp of the event denoting the added friendship relation is then the timestamp <em>ts</em> for that line's output. Also, the output must be updated when the results change due to the progress of time, e.g., when a comment is older that d. Specifically, if the update is triggered by an event leaving a time window at <em>t2</em> (i.e., <em>t2</em> = timestamp of the event + window size), the timestamp for the update is <em>t2</em>. As in Query 1, it is needless to say that timestamps refer to the logical time of the input data streams, rather than on the system clock.
 </p>
 <p>In summary, the output is specified as follows:</p>
-<p><b>ts</b>: the timestamp of the tuple that triggers a change in the top-3 scoring active posts<br/>
+<p><b>ts</b>: the timestamp of the tuple that triggers a change in the output.<br/>
 <b>comments_1,...,comment_k</b>: top k comments ordered by range, starting with the largest range (comment_1). </p>
 
 <h4>Sample output tuples for the query with k=3 could look as follows:</h4>
