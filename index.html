@@ -230,6 +230,16 @@ Given an integer <em>k</em> and a duration <em>d</em> (in seconds), find the <em
 <p><strong>Answer:</strong> The logical time of the processing engine is advanced through the timestamps in the respective tuples in the input streams. Apparently, different queries' logical clocks may be advancing independently from each other.</p>
 <p><strong>Question 2 (General):</strong> How do we determine the real-time latency (based on the system clock, for the performance evaluation) for updates that are caused by a timeout (e.g., events leaving a window)?</p>
 <p><strong>Answer:</strong> Latency measurement always refers to the real time it takes to process a single input tuple. Even when an input tuple triggers an update caused by the timeout of some event, it is the present input tuple's latency that should be measured, which has nothing to do with the logical or real time elapsed since the past event that just timed out.</p>
+
+<p><strong>Question 3 (General):</strong> How do we determine the logical timestamp ("ts" field in the output) for updates that are caused by a timeout (e.g., events leaving a window)?</p>
+<p><strong>Answer:</strong> The logical timestamp of a timeout event (i.e., a post's score dropping every 24 hours in Q1, or a comment leaving a given time window of d seconds in Q2) is the logical time of the event's generation, plus the logical time duration of the time window. For example, if a comment's expiration in Q2 should produce some output at logical time 10:00, but our logical clock goes past 10:00 only once we have encountered the first tuple with a later timestamp (e.g., at 11:00), the timestamp ("ts" field) reported should still be 10:00, rather than 11:00.</p>
+
+<p><strong>Question 4 (Query 1):</strong> If the top-3 posts stay in the same order but their scores change, should we produce an output tuple?</p>
+<p><strong>Answer:</strong> No, only if the order of the top-3 posts changes. If they preserve the same order but have different scores no new output is required.</p>
+
+<p><strong>Question 5 (General):</strong> Is the progress for Query 1 computed only whenever an incoming post or comment is processed? (i.e., there is no update of Query1 computed when a friendship or like are processed?)</p>
+<p><strong>Answer:</strong> Query 1 is updated considering input streams posts and comments only, while Query 2 is updated based on input streams likes, friendships, and comments.</p>
+
 <h3>Grand Challenge Co-Chairs</h3>
 <p style="text-align: left;">Vincenzo Gulisano, Chalmers University of Technology, Sweden</p>
 <p style="text-align: left;">Zbigniew Jerzak, SAP SE, Germany</p>
