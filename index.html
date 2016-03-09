@@ -240,6 +240,21 @@ Given an integer <em>k</em> and a duration <em>d</em> (in seconds), find the <em
 <p><strong>Question 5 (General):</strong> Is the progress for Query 1 computed only whenever an incoming post or comment is processed? (i.e., there is no update of Query1 computed when a friendship or like are processed?)</p>
 <p><strong>Answer:</strong> Query 1 is updated considering input streams posts and comments only, while Query 2 is updated based on input streams likes, friendships, and comments.</p>
 
+
+<p><strong>Question 6 (Query 1):</strong> What if a post's total score would theoretically reach 0 due to a timeout happening precisely on the timestamp of an incoming tuple but the latter also results in an increment for the score of such a post? Does such a post become immediately inactive or does it "survive" the transient state of 0 score?</p>
+
+<p><strong>Answer:</strong> When processing a new input tuple, processing steps should be performed in this order: 1) decrease the score of all previous posts (given the semantics of the query) 2) increase score of post related to the input tuple, 3) decrease score of posts expiring precisely on this timestamp, if any, and 4) discard posts with 0 score. Such a post would, thus, survive the transient state. However, a post whose score reached 0 at a timestamp earlier than the current input tuple, will not survive, even if the processing of that timeout happens to be triggered by the current input tuple.</p>
+
+<p><strong>Question 7 (General):</strong> Do we need to process Query 1 and Query 2 simultaneously? Is
+it possible to proceed either query ahead before the other?</p>
+
+<p><strong>Answer:</strong> The degree of parallelism is left to the participant's choice. Please notice, nevertheless, that the duration for each query should be measured as the time elapsed since the first tuple from any stream has been processed by any of the two queries (i.e., independently of whether you start running Q1 or Q2 first) until each query completes.</p>
+
+<p><strong>Question 8 (Query 2):</strong> Can you elaborate more on who is part of the group of a “community that shares an interest”, i.e., how the “range” is defined?</p>
+
+<p><strong>Answer:</strong>The query determines the size of a group where group members fulfill two conditions: (1) they all like the comment in question, (2) they are all friends with each other (i.e., they form a clique).</p>
+
+
 <h3>Grand Challenge Co-Chairs</h3>
 <p style="text-align: left;">Vincenzo Gulisano, Chalmers University of Technology, Sweden</p>
 <p style="text-align: left;">Zbigniew Jerzak, SAP SE, Germany</p>
